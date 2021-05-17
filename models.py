@@ -1,8 +1,9 @@
 # models.py
-from sqlalchemy import (Column, Index, Date, DateTime, Numeric, Integer, BigInteger, String, Text, ForeignKey, Boolean, JSON)
+from sqlalchemy import (Column, Index, Date, DateTime, Numeric, Integer, BigInteger, String, Text, ForeignKey, Boolean, JSON, ARRAY)
 from sqlalchemy.orm import relationship
 
 from database import Base
+
 
 class Authors(Base):
     __tablename__ = 'authors'
@@ -19,7 +20,7 @@ class Authors(Base):
 class Categories(Base):
     __tablename__ = 'categories'
     category_id = Column(Integer, primary_key=True)
-    category_name = Column(String(500), unique=True)
+    category_name = Column(String(500))
 
     def __init__(self, category_name=None):
         self.category_name = category_name
@@ -42,10 +43,9 @@ class Formats(Base):
 
 class Dataset(Base):
     __tablename__ = 'dataset'
-    id = Column(Integer, primary_key=True)
-    author = Column(Integer, ForeignKey('authors.author_id'))
+    author = Column(ARRAY(Integer))  # ForeignKey('authors.author_id'))
     bestsellers_rank = Column(Numeric(20, 2))
-    categorie = Column(JSON, ForeignKey('categories.category_id'))
+    categorie = Column(ARRAY(Integer))  # ForeignKey('categories.category_id'))
     description = Column(Text)
     dimension_x = Column(Numeric(20, 2))
     dimension_y = Column(Numeric(20, 2))
@@ -54,24 +54,25 @@ class Dataset(Base):
     edition_statement = Column(String(100))
     for_ages = Column(String(10))
     format = Column(Integer, ForeignKey('formats.format_id'))
-    illustrations_note = Column(String(100))
+    id = Column(BigInteger, primary_key=True)
+    illustrations_note = Column(String(500))
     image_checksum = Column(String(500))
     image_path = Column(String(500))
     image_url = Column(String(500))
     imprint = Column(String(300))
     index_date = Column(String(100))
     isbn10 = Column(String(100))
-    isbn13 = Column(Integer)
+    isbn13 = Column(BigInteger)
     lang = Column(String(10))
-    publication_date = Column(DateTime, nullable=False)
+    publication_date = Column(DateTime)
     publication_place = Column(String(100))
     rating_avg = Column(Numeric(20, 2))
     rating_count = Column(Numeric(20, 2))
     title = Column(String(500))
     url = Column(String(500))
     weight = Column(Numeric(20, 2))
-    authors = relationship("Authors")
-    categories = relationship("Categories")
+    # authors = relationship("Authors")
+    # categories = relationship("Categories")
     formats = relationship("Formats")
 
     def __init__(self, **kwargs):
