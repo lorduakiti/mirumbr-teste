@@ -3,13 +3,13 @@ import sys
 import shutil
 from itertools import (takewhile, repeat)
 
-path = 'E:\\GitHub\\mirumbr-teste\\'
-dataset = 'dataset_original.csv'
-path_file = os.path.join(path, dataset)
-path_ds_folder = 'datasets\\'
-path_ds_file = path + path_ds_folder + dataset
-filename = 'dataset.sql'
-path_ds_file_new = path + path_ds_folder + filename
+# path = 'E:\\GitHub\\mirumbr-teste\\'
+# dataset = 'dataset_original.csv'
+# path_file = os.path.join(path, dataset)
+# path_ds_folder = 'datasets\\'
+# path_ds_file = path + path_ds_folder + dataset
+# filename = 'dataset.sql'
+# path_ds_file_new = path + path_ds_folder + filename
 
 
 class bcolors:
@@ -147,8 +147,7 @@ def fixit_line(ln, step=1):
     return ln
 
 
-def fixit_file():
-    # Ajustando cabeçalho do arquivo "dataset.csv"
+def fixit_file_dataset(path, dataset, filename):
     try:
         ln = ''
         ln_aux = ''
@@ -156,6 +155,8 @@ def fixit_file():
         final_line = ''
 
         # Fazendo cópia do arquivo original
+        path_ds_file = os.path.join(path, dataset)
+        path_ds_file_new = os.path.join(path, filename)
         shutil.copy(path_ds_file, path_ds_file_new)
 
         # Alerando informações do cabeçalho
@@ -265,6 +266,8 @@ def fixit_file():
 
         print(f"{bcolors.OKBLUE}\nAjustado cabeçalho e linhas do arquivo: {bcolors.ENDC}", filename)
 
+        return path_ds_file_new
+
     except Exception as err:
         print(f"{bcolors.WARNING}\nErro ao corrigir cabeçalho e nome de colunas dos arquivos.{bcolors.ENDC}")
         print(ln, '\n')
@@ -275,4 +278,4 @@ def fixit_file():
 
 
 if __name__ == '__main__':
-    fixit_file()
+    fixit_file_dataset()

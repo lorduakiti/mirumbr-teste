@@ -1,4 +1,6 @@
 # connect.py
+import os
+import sys
 import config
 import psycopg2
 
@@ -20,11 +22,14 @@ def query(sql_query='', type='', list=None, debug=False, type_result='message',
         # conectando no banco PostgreSQL
         if debug:
             print('Conectando no banco de dados PostgreSQL "' + params['database'] + '" com o usuário "' + params['user'] + '" ...')
-
         conn = psycopg2.connect(**params)
 
         # criando cursor
         cursor = conn.cursor()
+
+        if debug and cursor is not None:
+            print("\nConexão concluída:", conn, "\n")
+
         if debug:
             print(type + ": ", sql_query)
 
@@ -96,9 +101,13 @@ def query(sql_query='', type='', list=None, debug=False, type_result='message',
         # fechando comunicação com PostgreSQL
         cursor.close()
 
-    except (Exception, psycopg2.DatabaseError) as error:
-        message = '\nERROR: %s' % error + ' - ' + message
+    except (Exception, psycopg2.DatabaseError) as err:
+        message = '\nERROR: %s' % err + ' - ' + message
         print(message)
+        print(err)
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
         return False
     finally:
         if conn is not None:
