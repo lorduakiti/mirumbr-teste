@@ -191,10 +191,10 @@ def extrac_files(re_extrac=''):
             extract_all()
 
 
-def main(re_extrac='', re_import=''):
+def exec_importation(re_extrac='', re_import=''):
     extrac_files(re_extrac)
     import_files(re_import)
 
 
 if __name__ == '__main__':
-    main()
+    exec_importation()
