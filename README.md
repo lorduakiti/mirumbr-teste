@@ -35,3 +35,19 @@ Para este teste utilize o seguinte dataset [kaggle](https://www.kaggle.com/sp1th
 * Considerando a coluna **“rating-avg”**, quais os 10 livros mais bem posicionados?
 * Quantos livros possuem **“rating-avg”** maior do que 3,5?
 * Quantos livros tem data de publicação (publication-date) maior do que 01-01-2020?
+
+
+### Variáveis de Configuração
+As seguintes variáveis devem ser incluídas no arquivo ".env", na pasta raiz, ou então serem configuradas no ambiente de execução.
+
+DATABASE  
+DATABASE_HOST  
+DATABASE_USER  
+DATABASE_PASSWORD  
+DATABASE_PORT  
+ 
+SECRET_KEY  
+ 
+ZIP_FILENAME = Teste-DataEngineer-Bases.zip  
+DS_FOLDER = datasets  
+RP_FOLDER = respostas 
