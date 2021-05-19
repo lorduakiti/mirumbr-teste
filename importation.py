@@ -64,8 +64,8 @@ def import_all():
                 # print('\n', path_ds_file_new, '\n', result)
                 conn = database.engine.raw_connection()
                 cursor = conn.cursor()
-                # cursor.copy_expert(sql_file.read(), w)
-                cursor.copy_expert(sql_file.readline(), w)
+                cursor.copy_expert(sql_file.read(), w)
+                # cursor.copy_expert(sql_file.readline(), w)
                 conn.commit()
 
             else:
