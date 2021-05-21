@@ -16,6 +16,9 @@ class Authors(Base):
     def __repr__(self):
         return f'<Authors {self.author_name!r}>'
 
+    def to_json(self):
+        return {"author_id": self.author_id, "author_name": self.author_name}
+
 
 class Categories(Base):
     __tablename__ = 'categories'
@@ -28,6 +31,9 @@ class Categories(Base):
     def __repr__(self):
         return f'<Categories {self.category_name!r}>'
 
+    def to_json(self):
+        return {"category_id": self.category_id, "category_name": self.category_name}
+
 
 class Formats(Base):
     __tablename__ = 'formats'
@@ -39,6 +45,9 @@ class Formats(Base):
 
     def __repr__(self):
         return f'<Formats {self.format_name!r}>'
+
+    def to_json(self):
+        return {"format_id": self.format_id, "format_name": self.format_name}
 
 
 class Dataset(Base):
@@ -82,4 +91,36 @@ class Dataset(Base):
 
     def __repr__(self):
         return f'{self.title}, {self.author}, {self.categorie}, {self.format}'
+
+    def to_json(self):
+        return {
+            "author": self.author,
+            "bestsellers_rank": self.bestsellers_rank,
+            "categorie": self.categorie,
+            "description": self.description,
+            "dimension_x": self.dimension_x,
+            "dimension_y": self.dimension_y,
+            "dimension_z": self.dimension_z,
+            "edition": self.edition,
+            "edition_statement": self.edition_statement,
+            "for_ages": self.for_ages,
+            "format": self.format,
+            "id": self.id,
+            "illustrations_note": self.illustrations_note,
+            "image_checksum": self.image_checksum,
+            "image_path": self.image_path,
+            "image_url": self.image_url,
+            "imprint": self.imprint,
+            "index_date": self.index_date,
+            "isbn10": self.isbn10,
+            "isbn13": self.isbn13,
+            "lang": self.lang,
+            "publication_date": self.publication_date,
+            "publication_place": self.publication_place,
+            "rating_avg": self.rating_avg,
+            "rating_count": self.rating_count,
+            "title": self.title,
+            "url": self.url,
+            "weight": self.weight
+        }
 
