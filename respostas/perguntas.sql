@@ -76,4 +76,4 @@ AND rating_avg > 3.5;
 SELECT
 	count(d.id) as "qtd_livros_publicados"
 FROM public.dataset d
-WHERE publication_date > '01-01-2020 00:00:00';
+WHERE publication_date > '2020-01-01 00:00:00';
