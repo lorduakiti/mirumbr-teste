@@ -9,6 +9,7 @@ psycopg2 = "*"
 flask = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
+simplejson = "*"
 
 [dev-packages]
 
