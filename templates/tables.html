@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Table {{table_name}}</title>
+        <title>Table "{{table_name}}"</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <style>
         table > thead tr th{
@@ -23,11 +23,11 @@
         </style>
     </head>
     <body>
-        <h1 style="text-align: center;">Table: {{table_name}}</h1>
+        <h1 style="text-align: center;">Table "{{table_name}}"</h1>
         <div class="container">
             <div class="row">
                 <div class="col-md-10" align="left">
-                    <button class="btn btn-block btn-info" onclick="location.href='/tables/{{table_name}}/add';">
+                    <button class="btn btn-block btn-info" onclick="location.href='/tables/add/{{table_name}}';">
                         <label>Adicionar Novo</label>
                     </button>
                 </div>
@@ -55,9 +55,8 @@
                                 <td>{{el.author_id}}</td>
                                 <td>{{el.author_name}}</td>
                                 <td>
-                                    <a href="/tables/{{table_name}}/edit/{{el.author_id}}">Editar</a>
-                                    <a href="/tables/{{table_name}}/delete/{{el.author_id}}">Excluir</a>
-                                    <a href="/tables/{{table_name}}/update/{{el.author_id}}">Update</a>
+                                    <a href="/tables/edit/{{table_name}}/{{el.author_id}}">Editar</a>
+                                    <a href="/tables/delete/{{table_name}}/{{el.author_id}}">Excluir</a>
                                 </td>
                             </tr>
                             {% endfor %}

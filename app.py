@@ -64,8 +64,57 @@ def tables(table, pagination=1):
         table_name = 'authors'
         table_file = 'tables.html'
         obj = Authors.query.order_by(Authors.author_name.asc()).limit(qtd_rows).all()
-    # print(table, table_name, table_file, pagination)
+    # print(table, table_name, table_file, pagination, qtd_rows)
     return render_template(table_file, table=obj, table_name=table_name, pagination=pagination)
+
+
+@app.route("/tables/add/<table>", methods=['GET', 'POST'])
+@exception_handler
+def tables_add(table):
+    if table == 'authors':
+        table_name = 'authors'
+        table_file = 'tables_add.html'
+
+    if request.method == 'POST':
+        if table == 'authors':
+            obj = Authors(author_id=request.form["author_id"], author_name=request.form["author_name"])
+        db.session.add(obj)
+        db.session.commit()
+        return redirect(url_for('tables/' + table))
+    # print(table)
+
+    return render_template(table_file, table_name=table_name)
+
+
+@app.route("/tables/edit/<table>", methods=['GET', 'POST'])
+@exception_handler
+def tables_edit(table):
+    if table == 'authors':
+        obj = Authors.query.get(id)
+        table_name = 'authors'
+        table_file = 'tables_edit.html'
+
+    if request.method == 'POST':
+        if table == 'authors':
+            obj.author_id = request.form["author_id"]
+            obj.author_name = request.form["author_name"]
+        db.session.commit()
+        return redirect(url_for('tables.html/' + table))
+    # print(table)
+
+    return render_template(table_file, table=obj, table_name=table_name)
+
+
+
+@app.route("/tables/delete/<table>/<int:id>", methods=['GET', 'POST'])
+@exception_handler
+def tables_delete(table, id):
+    if table == 'authors':
+        obj = Authors.query.get(id)
+    db.session.delete(obj)
+    db.session.commit()
+    return redirect(url_for('tables/' + table))
+    print(table)
 
 
 @app.route("/authors/", methods=['GET'])
