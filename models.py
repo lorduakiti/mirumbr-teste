@@ -10,7 +10,8 @@ class Authors(Base):
     author_id = Column(Integer, primary_key=True)
     author_name = Column(String(250), unique=True)
 
-    def __init__(self, author_name=None):
+    def __init__(self, author_id=None, author_name=None):
+        self.author_id = author_id
         self.author_name = author_name
 
     def __repr__(self):
@@ -25,7 +26,8 @@ class Categories(Base):
     category_id = Column(Integer, primary_key=True)
     category_name = Column(String(500))
 
-    def __init__(self, category_name=None):
+    def __init__(self, category_id=None, category_name=None):
+        self.category_id = category_id
         self.category_name = category_name
 
     def __repr__(self):
@@ -40,7 +42,8 @@ class Formats(Base):
     format_id = Column(Integer, primary_key=True)
     format_name = Column(String(50), unique=True)
 
-    def __init__(self, format_name=None):
+    def __init__(self, format_id=None, format_name=None):
+        self.format_id = format_id
         self.format_name = format_name
 
     def __repr__(self):
@@ -85,15 +88,17 @@ class Dataset(Base):
     formats = relationship("Formats")
 
     def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
         self.author = kwargs.get('author')
         self.categorie = kwargs.get('categorie')
         self.format = kwargs.get('format')
 
     def __repr__(self):
-        return f'{self.title}, {self.author}, {self.categorie}, {self.format}'
+        return f'{self.id}, {self.title}, {self.author}, {self.categorie}, {self.format}'
 
     def to_json(self):
         return {
+            "id": self.id,
             "author": self.author,
             "bestsellers_rank": self.bestsellers_rank,
             "categorie": self.categorie,
@@ -105,7 +110,6 @@ class Dataset(Base):
             "edition_statement": self.edition_statement,
             "for_ages": self.for_ages,
             "format": self.format,
-            "id": self.id,
             "illustrations_note": self.illustrations_note,
             "image_checksum": self.image_checksum,
             "image_path": self.image_path,
