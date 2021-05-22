@@ -55,6 +55,124 @@ def root():
     return render_template('index.html')
 
 
+@app.route("/responses/<int:num>", methods=['GET'])
+@exception_handler
+def responses(num):
+    # Qual a quantidade total de livros da base?
+    if num == 1:
+        table_name = 'Qual a quantidade total de livros da base?'
+        columns = ['qtd_livros']
+        query = 'SELECT count(*) as ' + columns[0] + ' FROM public.dataset;'
+
+    # Qual a quantidade de livros que possuí apenas 1 autor?
+    elif num == 2:
+        table_name = 'Qual a quantidade de livros que possuí apenas 1 autor?'
+        columns = ['qtd_livros_com_um_autor']
+        query = 'SELECT ' \
+                '	count(*) as ' + columns[0] + ' ' \
+                'FROM public.dataset ' \
+                'WHERE array_length(author, 1) = 1;'
+
+    # Quais os 5 autores com a maior quantidade de livros?
+    elif num == 3:
+        table_name = 'Quais os 5 autores com a maior quantidade de livros?'
+        columns = ['author_name', 'qtd_livros_por_autor']
+        query = 'SELECT ' \
+                '	a.' + columns[0] + ', ' \
+                '	count(d.id) as ' + columns[1] + ' ' \
+                'FROM public.authors a ' \
+                'LEFT JOIN public.dataset d on a.author_id = ANY(d.author) ' \
+                'GROUP BY  a.author_name ' \
+                'ORDER BY  count(d.id) desc, a.author_name ' \
+                'LIMIT 5;'
+
+    # Qual a quantidade de livros por categoria?
+    elif num == 4:
+        table_name = 'Qual a quantidade de livros por categoria?'
+        columns = ['category_name', 'qtd_livros_por_categoria']
+        query = 'SELECT ' \
+                '	c.' + columns[0] + ', ' \
+                '	count(d.id) as ' + columns[1] + ' ' \
+                'FROM public.categories c ' \
+                'LEFT JOIN public.dataset d on c.category_id = ANY(d.categorie) ' \
+                'GROUP BY  c.category_name ' \
+                'ORDER BY  c.category_name;'
+
+    # Quais as 5 categorias com a maior quantidade de livros?
+    elif num == 5:
+        table_name = 'Quais as 5 categorias com a maior quantidade de livros?'
+        columns = ['category_name', 'qtd_livros_por_categoria']
+        query = 'SELECT ' \
+                '	c.' + columns[0] + ', ' \
+                '	count(d.id) as ' + columns[1] + ' ' \
+                'FROM public.categories c ' \
+                'LEFT JOIN public.dataset d on c.category_id = ANY(d.categorie) ' \
+                'GROUP BY  c.category_name ' \
+                'ORDER BY  count(d.id) desc, c.category_name ' \
+                'LIMIT 5;'
+
+    # Qual o formato com a maior quantidade de livros?
+    elif num == 6:
+        table_name = 'Qual o formato com a maior quantidade de livros?'
+        columns = ['format_name', 'qtd_livros_por_formato']
+        query = 'SELECT ' \
+                '	f.' + columns[0] + ', ' \
+                '	count(d.id) as ' + columns[1] + ' ' \
+                'FROM public.formats f ' \
+                'LEFT JOIN public.dataset d on f.format_id = d.format ' \
+                'GROUP BY  f.format_name ' \
+                'ORDER BY  count(d.id) desc, f.format_name ' \
+                'LIMIT 1;'
+
+    # Considerando a coluna “bestsellers-rank”, quais os 10 livros mais bem posicionados?
+    elif num == 7:
+        table_name = 'Considerando a coluna “bestsellers-rank”, quais os 10 livros mais bem posicionados?'
+        columns = ['title', 'bestsellers_rank']
+        query = 'SELECT ' \
+                '	d.' + columns[0] + ', ' \
+                '	d.' + columns[1] + ' ' \
+                'FROM public.dataset d ' \
+                'WHERE bestsellers_rank IS NOT NULL ' \
+                'ORDER BY  bestsellers_rank desc ' \
+                'LIMIT 10;'
+
+    # Considerando a coluna “rating-avg”, quais os 10 livros mais bem posicionados?
+    elif num == 8:
+        table_name = 'Considerando a coluna “rating-avg”, quais os 10 livros mais bem posicionados?'
+        columns = ['title', 'rating_avg', 'rating_count']
+        query = 'SELECT ' \
+                '	d.' + columns[0] + ', ' \
+                '	d.' + columns[1] + ', ' \
+                '	d.' + columns[2] + ' ' \
+                'FROM public.dataset d ' \
+                'WHERE rating_avg IS NOT NULL ' \
+                'ORDER BY  rating_avg desc, d.rating_count ' \
+                'LIMIT 10;'
+
+    # Quantos livros possuem “rating-avg” maior do que 3,5?
+    elif num == 9:
+        table_name = 'Quantos livros possuem “rating-avg” maior do que 3,5?'
+        columns = ['qtd_livros_rating_maior_3_5']
+        query = 'SELECT ' \
+                '	count(d.id) as ' + columns[0] + ' ' \
+                'FROM public.dataset d ' \
+                'WHERE rating_avg IS NOT NULL ' \
+                'AND rating_avg > 3.5;'
+
+    # Quantos livros tem data de publicação (publication-date) maior do que 01/01/2020?
+    elif num == 10:
+        table_name = 'Quantos livros tem data de publicação (publication-date) maior do que 01/01/2020?'
+        columns = ['qtd_livros_publicados']
+        query = 'SELECT ' \
+                '	count(d.id) as ' + columns[0] + ' ' \
+                'FROM public.dataset d ' \
+                'WHERE publication_date > \'2020-01-01 00:00:00\';'
+
+    con = engine.connect()
+    obj = con.execute(query)
+    return render_template('responses.html', table=obj, columns=columns, table_name=table_name)
+
+
 @app.route("/tables/<table>", methods=['GET', 'POST'])
 @exception_handler
 def tables(table, pagination=1):
