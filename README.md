@@ -1,12 +1,17 @@
 # Agência Mirium - BR
 Teste Técnico - [Engenheiro de Dados](https://jobs.kenoby.com/mirum/job/engenheiro-a-de-dados-pleno-remoto/607d6fc173a07e1bd3f50f34) - [Mirum Agency](https://www.mirumagency.com.br/)
 
-## Objetivo
+## Objetivo:
 Este teste tem o objetivo de avaliar a capacidade do candidato em realizar tratamentos em bases de dados, como cruzamento, consolidação e ordenação. Fica a critério do candidato escolher a linguagem de programação de sua preferência para realização do teste (Python, Go, Java, C#, C++, C, Ruby, etc), sendo os critérios de avaliação a funcionalidade da solução, a clareza e facilidade de manutenção do código e a performance de execução, nesta ordem.
 
 Para a entrega deverão ser enviadas as respostas das perguntas, bem como os arquivos e códigos utilizados para a resolução do mesmo.
 
-## Bases
+
+## Resultados:
+[Apresentação de Respostas](/UakitiPires.pdf) 
+
+
+## Bases:
 Para este teste utilize o seguinte dataset [kaggle](https://www.kaggle.com/sp1thas/book-depository-dataset), considerando os arquivos listados a seguir, enviados junto a este teste:
 * authors.csv
     - Contém o nome dos autores e o id que o representa no arquivo **“dataset”**;
@@ -23,7 +28,7 @@ Para este teste utilize o seguinte dataset [kaggle](https://www.kaggle.com/sp1th
 * Cruze os dados do arquivo **“formats”** com o **“dataset”**, de forma a incluir o nome do formato do livro de acordo com id do formato da base **“dataset”**;
 
 
-## Perguntas
+## Perguntas:
 
 * Qual a quantidade total de livros da base?
 * Qual a quantidade de livros que possuí apenas 1 autor?
@@ -37,7 +42,7 @@ Para este teste utilize o seguinte dataset [kaggle](https://www.kaggle.com/sp1th
 * Quantos livros tem data de publicação (publication-date) maior do que 01-01-2020?
 
 
-### Variáveis de Configuração
+### Variáveis de Configuração:
 As seguintes variáveis devem ser incluídas no arquivo ".env", na pasta raiz, ou então serem configuradas no ambiente de execução.
 
 DATABASE  
